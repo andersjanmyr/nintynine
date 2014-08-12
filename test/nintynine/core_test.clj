@@ -28,3 +28,14 @@
 (fact "P06: palindrome"
   (palindrome [1 2 3 2 1]) => true
   (palindrome [1 2 3 2 3]) => false)
+
+(fact "P07: flatten"
+  (flatten [1 [2 3] [4 5]]) => [1 2 3 4 5])
+
+(defn compress [l]
+  (let [c #(if (= (last %1) %2) %1 (conj %1 %2))]
+    (reduce c [] l)))
+
+
+(fact "P08: compress consecutive duplicates"
+  (compress [\a \a \a \a \b \c \c \a \a \d \e \e \e \e]) => [ \a \b \c \a \d \e])
