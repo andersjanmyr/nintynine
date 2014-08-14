@@ -39,3 +39,15 @@
 
 (fact "P08: compress consecutive duplicates"
   (compress [\a \a \a \a \b \c \c \a \a \d \e \e \e \e]) => [ \a \b \c \a \d \e])
+
+(defn pack [l]
+  (let [c #(if (= (last (last %1)) %2)
+             (conj (subvec %1 0 (- (count %1) 1))
+                   (conj (last %1) %2))
+             (conj %1 [%2]))]
+    (reduce c [] l)))
+
+(fact "P09: pack consecutive duplicates"
+  (pack [\a \a \a \a \b \c \c \a \a \d \e \e \e \e]) =>
+    [[\a \a \a \a] [\b] [\c \c] [\a \a] [\d] [\e \e \e \e]])
+
