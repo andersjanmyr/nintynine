@@ -51,3 +51,22 @@
   (pack [\a \a \a \a \b \c \c \a \a \d \e \e \e \e]) =>
     [[\a \a \a \a] [\b] [\c \c] [\a \a] [\d] [\e \e \e \e]])
 
+(defn encode [l]
+  (map (fn [sl] [(count sl) (first sl)]) (pack l)))
+
+(fact "P10: run length encoding of list"
+  (encode [\a \a \a \a \b \c \c \a \a \d \e \e \e \e]) =>
+    [[4 \a] [1 \b] [2 \c] [2 \a] [1 \d] [4 \e]])
+
+(defn encodeModified [l]
+  (let [f (fn [sl]
+            (let [c (count sl)]
+              (if (= c 1)
+                (first sl)
+                [c (first sl)])))]
+    (map f (pack l))))
+
+(fact "P11: run length encoding, direct single elements"
+  (encodeModified [\a \a \a \a \b \c \c \a \a \d \e \e \e \e]) =>
+    [[4 \a] \b [2 \c] [2 \a] \d [4 \e]])
+
