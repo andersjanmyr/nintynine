@@ -101,4 +101,8 @@
 (fact "P15: n-plicate element of list "
   (duplicateN 3 [1 2 3 4]) => [1 1 1 2 2 2 3 3 3 4 4 4])
 
+(defn dropN [n l]
+  (mapcat #(take 2 %1) (partition-all n l)))
 
+(fact "P16: Drop every Nth element from a list."
+  (dropN 3 [1 2 3 4 5 6 7 8]) => [1 2 4 5 7 8])
