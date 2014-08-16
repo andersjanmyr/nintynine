@@ -89,3 +89,16 @@
   (encodeDirect [\a \a \a \a \b \c \c \a \a \d \e \e \e \e]) =>
   [[4 \a] [1 \b] [2 \c] [2 \a] [1 \d] [4 \e]])
 
+(defn duplicate [l]
+  (mapcat (fn [i] [i i]) l))
+
+(fact "P14: duplicate element of list "
+  (duplicate [1 2 3 4]) => [1 1 2 2 3 3 4 4])
+
+(defn duplicateN [n l]
+  (mapcat (fn [i] (repeat n i)) l))
+
+(fact "P15: n-plicate element of list "
+  (duplicateN 3 [1 2 3 4]) => [1 1 1 2 2 2 3 3 3 4 4 4])
+
+
