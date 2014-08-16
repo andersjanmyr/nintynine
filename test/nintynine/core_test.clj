@@ -77,4 +77,16 @@
   (decode [[4 \a] [1 \b] [2 \c] [2 \a] [1 \d] [4 \e]]) =>
     [\a \a \a \a \b \c \c \a \a \d \e \e \e \e])
 
+(defn encodeDirect [l]
+  (let [r #(let [[n c] (last %1)]
+             (do (println "n"  n c)
+               (if (= c %2)
+                 (conj (subvec %1 0 (- (count %1) 1))
+                       [(+ n 1) %2])
+                 (conj %1 [1 %2]))))]
+    (reduce r []  l)))
+
+(fact "P13: direct run length encoding of list"
+  (encodeDirect [\a \a \a \a \b \c \c \a \a \d \e \e \e \e]) =>
+  [[4 \a] [1 \b] [2 \c] [2 \a] [1 \d] [4 \e]])
 
