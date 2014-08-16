@@ -106,3 +106,8 @@
 
 (fact "P16: Drop every Nth element from a list."
   (dropN 3 [1 2 3 4 5 6 7 8]) => [1 2 4 5 7 8])
+
+(fact "P17 (*) Split a list into two parts."
+  (split-at 2 [1 2 3 4 5 6]) => [[1 2] [3 4 5 6]])
+
+(fact)
