@@ -70,3 +70,11 @@
   (encodeModified [\a \a \a \a \b \c \c \a \a \d \e \e \e \e]) =>
     [[4 \a] \b [2 \c] [2 \a] \d [4 \e]])
 
+(defn decode [l]
+  (flatten (map #(repeat (first %1) (second %1)) l)))
+
+(fact "P12: run length decoding of list"
+  (decode [[4 \a] [1 \b] [2 \c] [2 \a] [1 \d] [4 \e]]) =>
+    [\a \a \a \a \b \c \c \a \a \d \e \e \e \e])
+
+
