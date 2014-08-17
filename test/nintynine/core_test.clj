@@ -112,6 +112,21 @@
 (defn slice [start end l]
   (->> l (drop start) (take (- end start))))
 
-(fact "P18  Extract a slice from a list."
+(fact "P18:   Extract a slice from a list."
   (slice 2 4 [1 2 3 4 5 6]) => [3 4])
 
+(defn rotate [n l]
+  (if (< n 0)
+    (let [m (+ (count l) n)]
+      (concat (drop m l) (take m l)))
+    (concat (drop n l) (take n l))))
+
+(fact "P19: Rotate a list N places to the left"
+  (rotate 3 [1 2 3 4 5 6]) => [4 5 6 1 2 3]
+  (rotate -2 [1 2 3 4 5 6]) => [5 6 1 2 3 4])
+
+(defn remove-at [n l]
+  [(concat (subvec l 0 n) (subvec l (inc n))) (l n)])
+
+(fact "P20: Remove k:th element from list return a tuple"
+  (remove-at 2 [1 2 3 4 5 6]) => [[1 2 4 5 6] 3])
