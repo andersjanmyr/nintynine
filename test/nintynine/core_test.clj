@@ -42,7 +42,7 @@
 
 (defn pack [l]
   (let [c #(if (= (last (last %1)) %2)
-             (conj (subvec %1 0 (- (count %1) 1))
+             (conj (subvec %1 0 (dec (count %1)))
                    (conj (last %1) %2))
              (conj %1 [%2]))]
     (reduce c [] l)))
@@ -80,8 +80,7 @@
 (defn encodeDirect [l]
   (let [r #(let [[n c] (last %1)]
              (if (= c %2)
-               (conj (subvec %1 0 (- (count %1) 1))
-                     [(+ n 1) %2])
+               (update-in %1 [(dec (count %1)) 0] inc)
                (conj %1 [1 %2])))]
     (reduce r [] l)))
 
