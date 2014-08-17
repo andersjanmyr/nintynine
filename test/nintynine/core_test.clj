@@ -106,7 +106,12 @@
 (fact "P16: Drop every Nth element from a list."
   (drop-n 3 [1 2 3 4 5 6 7 8]) => [1 2 4 5 7 8])
 
-(fact "P17 (*) Split a list into two parts."
+(fact "P17: Split a list into two parts."
   (split-at 2 [1 2 3 4 5 6]) => [[1 2] [3 4 5 6]])
 
-(fact)
+(defn slice [start end l]
+  (->> l (drop start) (take (- end start))))
+
+(fact "P18  Extract a slice from a list."
+  (slice 2 4 [1 2 3 4 5 6]) => [3 4])
+
