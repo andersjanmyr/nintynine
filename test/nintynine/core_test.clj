@@ -58,7 +58,7 @@
   (encode [\a \a \a \a \b \c \c \a \a \d \e \e \e \e]) =>
     [[4 \a] [1 \b] [2 \c] [2 \a] [1 \d] [4 \e]])
 
-(defn encodeModified [l]
+(defn encode-modified [l]
   (let [f (fn [sl]
             (let [c (count sl)]
               (if (= c 1)
@@ -67,7 +67,7 @@
     (map f (pack l))))
 
 (fact "P11: run length encoding, direct single elements"
-  (encodeModified [\a \a \a \a \b \c \c \a \a \d \e \e \e \e]) =>
+  (encode-modified [\a \a \a \a \b \c \c \a \a \d \e \e \e \e]) =>
     [[4 \a] \b [2 \c] [2 \a] \d [4 \e]])
 
 (defn decode [l]
@@ -77,7 +77,7 @@
   (decode [[4 \a] [1 \b] [2 \c] [2 \a] [1 \d] [4 \e]]) =>
     [\a \a \a \a \b \c \c \a \a \d \e \e \e \e])
 
-(defn encodeDirect [l]
+(defn encode-direct [l]
   (let [r #(let [[n c] (last %1)]
              (if (= c %2)
                (update-in %1 [(dec (count %1)) 0] inc)
@@ -85,7 +85,7 @@
     (reduce r [] l)))
 
 (fact "P13: direct run length encoding of list"
-  (encodeDirect [\a \a \a \a \b \c \c \a \a \d \e \e \e \e]) =>
+  (encode-direct [\a \a \a \a \b \c \c \a \a \d \e \e \e \e]) =>
   [[4 \a] [1 \b] [2 \c] [2 \a] [1 \d] [4 \e]])
 
 (defn duplicate [l]
@@ -94,17 +94,17 @@
 (fact "P14: duplicate element of list "
   (duplicate [1 2 3 4]) => [1 1 2 2 3 3 4 4])
 
-(defn duplicateN [n l]
+(defn duplicate-n [n l]
   (mapcat (fn [i] (repeat n i)) l))
 
 (fact "P15: n-plicate element of list "
-  (duplicateN 3 [1 2 3 4]) => [1 1 1 2 2 2 3 3 3 4 4 4])
+  (duplicate-n 3 [1 2 3 4]) => [1 1 1 2 2 2 3 3 3 4 4 4])
 
-(defn dropN [n l]
+(defn drop-n [n l]
   (mapcat #(take 2 %1) (partition-all n l)))
 
 (fact "P16: Drop every Nth element from a list."
-  (dropN 3 [1 2 3 4 5 6 7 8]) => [1 2 4 5 7 8])
+  (drop-n 3 [1 2 3 4 5 6 7 8]) => [1 2 4 5 7 8])
 
 (fact "P17 (*) Split a list into two parts."
   (split-at 2 [1 2 3 4 5 6]) => [[1 2] [3 4 5 6]])
