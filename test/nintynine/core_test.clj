@@ -130,3 +130,25 @@
 
 (fact "P20: Remove k:th element from list return a tuple"
   (remove-at 2 [1 2 3 4 5 6]) => [[1 2 4 5 6] 3])
+
+(defn insert [e i l]
+  (concat (subvec l 0 i) [e] (subvec l i)))
+
+(fact "P21: Insert an element at a given position into a list."
+  (insert \a 2 [1 2 3 4]) => [1 2 \a 3 4])
+
+(fact "P22: Create a list containing all integers within a given range."
+  (range 5 8) => [5 6 7])
+
+(defn rands [n l]
+  (take n (repeatedly #(rand-nth l))))
+
+(fact "P23: Extract a given number of randomly selected elements from a list."
+  (let [nums (rands 5 [1 2 3 4 5])]
+    (do
+      (print nums)
+      (count nums) => 5)
+      (every? #(> %1 0) nums)
+      (every? #(< %1 6) nums)))
+
+(fact "P24: Lotto: Draw N different random numbers from the set 1..M.")
