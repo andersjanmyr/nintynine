@@ -148,7 +148,24 @@
     (do
       (print nums)
       (count nums) => 5)
-      (every? #(> %1 0) nums)
-      (every? #(< %1 6) nums)))
+      (every? #(>= %1 1) nums)
+      (every? #(<= %1 5) nums)))
 
-(fact "P24: Lotto: Draw N different random numbers from the set 1..M.")
+(defn lotto [n m]
+  (loop [bowl (into [] (range 1 m))
+        result []]
+    (if (= (count result) n)
+      result
+      (let [i (rand-int (count bowl))
+            [new-bowl el] (remove-at i bowl)]
+        (recur (into [] new-bowl) (conj result el))))))
+
+
+(fact "P24: Lotto: Draw N different random numbers from the set 1..M."
+  (let [nums (lotto 7 36)]
+    (do
+      (print nums)
+      (count nums) => 7)
+      (every? #(>= %1 0) nums)
+      (every? #(<= %1 35) nums)))
+
