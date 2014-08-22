@@ -152,13 +152,13 @@
       (every? #(<= %1 5) nums)))
 
 (defn lotto [n m]
-  (loop [bowl (into [] (range 1 m))
+  (loop [bowl (set (range 1 (inc m)))
         result []]
     (if (= (count result) n)
       result
       (let [i (rand-int (count bowl))
-            [new-bowl el] (remove-at i bowl)]
-        (recur (into [] new-bowl) (conj result el))))))
+            new-bowl (disj bowl i)]
+        (recur new-bowl (conj result i))))))
 
 
 (fact "P24: Lotto: Draw N different random numbers from the set 1..M."
