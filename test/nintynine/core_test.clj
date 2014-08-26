@@ -126,7 +126,7 @@
   (rotate -2 [1 2 3 4 5 6]) => [5 6 1 2 3 4])
 
 (defn remove-at [n l]
-  [(concat (subvec l 0 n) (subvec l (inc n))) (l n)])
+  [(into [] (concat (subvec l 0 n) (subvec l (inc n)))) (l n)])
 
 (fact "P20: Remove k:th element from list return a tuple"
   (remove-at 2 [1 2 3 4 5 6]) => [[1 2 4 5 6] 3])
