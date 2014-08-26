@@ -140,32 +140,42 @@
 (fact "P22: Create a list containing all integers within a given range."
   (range 5 8) => [5 6 7])
 
-(defn rands [n l]
-  (take n (repeatedly #(rand-nth l))))
+(defn random-select [n l]
+  (loop [els l
+         result []]
+    (if (= (count result) n)
+      result
+      (let [[new-els el] (remove-at (rand-int (count els)) els)]
+          (recur new-els (conj result el))))))
 
 (fact "P23: Extract a given number of randomly selected elements from a list."
-  (let [nums (rands 5 [1 2 3 4 5])]
+  (let [nums (random-select 5 [1 2 3 4 5])]
     (do
-      (print nums)
       (count nums) => 5)
+      (count nums) => (count (set nums))
       (every? #(>= %1 1) nums)
       (every? #(<= %1 5) nums)))
 
 (defn lotto [n m]
-  (loop [bowl (set (range 1 (inc m)))
-        result []]
-    (if (= (count result) n)
-      result
-      (let [i (rand-int (count bowl))
-            new-bowl (disj bowl i)]
-        (recur new-bowl (conj result i))))))
+  (random-select n (into [] (range 1 (inc m)))))
 
 
 (fact "P24: Lotto: Draw N different random numbers from the set 1..M."
   (let [nums (lotto 7 36)]
     (do
-      (print nums)
-      (count nums) => 7)
-      (every? #(>= %1 0) nums)
-      (every? #(<= %1 35) nums)))
+      (count nums) => 7
+      (count nums) => (count (set nums))
+      (every? #(>= %1 0) nums) => true
+      (every? #(>= %1 0) nums) => true
+      (every? #(<= %1 35) nums) => true)))
 
+(defn random-permute [l]
+  (random-select (count l) l))
+
+(fact "P25: Generate a random permutation of the elements of a list."
+  (let [perm (random-permute (into [] (range 0 10)))]
+    (do
+      (count perm) => 10
+      (count perm) => (count (set perm))
+      (every? #(>= %1 0) perm) => true
+      (every? #(<= %1 10) perm) => true)))
