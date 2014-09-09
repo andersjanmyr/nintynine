@@ -1,5 +1,6 @@
 (ns nintynine.core-test
-  (:require [midje.sweet :refer :all]))
+  (:require [midje.sweet :refer :all]
+            [clojure.math.combinatorics :as comb]))
 
 (fact "P01: last element"
   (last (list 1 2 3)) => 3
@@ -179,3 +180,13 @@
       (count perm) => (count (set perm))
       (every? #(>= %1 0) perm) => true
       (every? #(<= %1 10) perm) => true)))
+
+(defn combinations [n l]
+  (comb/combinations l n))
+
+(fact "P26: Generate the combinations of K distinct objects chosen from the N elements of a list."
+  (let [comb (combinations 3 (into [] (range 0 12)))]
+    (do
+      (count comb) => 220
+      (every? #(<= (count %1) 3) comb) => true)))
+
